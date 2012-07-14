@@ -4,6 +4,7 @@
 #	devkitARM release 42
 #	devkitPPC release 27
 #	devkitPSP release 17
+#	devkitSH4 release 0
 #---------------------------------------------------------------------------------
 
 if [ 1 -eq 1 ] ; then
