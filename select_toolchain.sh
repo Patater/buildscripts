@@ -10,6 +10,9 @@ case "$BUILD_DKPRO_PACKAGE" in
   "3" )
     VERSION=3
   ;;
+  "4" )
+    VERSION=4
+  ;;
 esac
 
 while [ $VERSION -eq 0 ]
@@ -20,9 +23,10 @@ do
   echo "1: devkitARM (gba gp32 ds)"
   echo "2: devkitPPC (gamecube wii)"
   echo "3: devkitPSP (PSP)"
+  echo "4: devkitSH4 (dreamcast)"
   read VERSION
 
-  if [ "$VERSION" -ne 1 -a "$VERSION" -ne 2 -a "$VERSION" -ne 3 ]
+  if [ "$VERSION" -ne 1 -a "$VERSION" -ne 2 -a "$VERSION" -ne 3 -a "$VERSION" -ne 4 ]
   then
       VERSION=0
   fi
@@ -58,5 +62,15 @@ case "$VERSION" in
     package=devkitPSP
     target=psp
     toolchain=DEVKITPSP
+  ;;
+  "4" )
+    GCC_VER=4.7.1
+    BINUTILS_VER=2.22
+    NEWLIB_VER=1.20.0
+    GDB_VER=7.4.1
+    basedir='dksh4'
+    package=devkitSH4
+    target=sh4-none-elf
+    toolchain=DEVKITSH4
   ;;
 esac
