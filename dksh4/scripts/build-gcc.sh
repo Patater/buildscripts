@@ -81,106 +81,88 @@ fi
 
 unset CFLAGS
 cd $BUILDDIR
-#
-#unset CFLAGS
-#unset CFLAGS_FOR_HOST
-#unset LDFLAGS
-#
-##---------------------------------------------------------------------------------
-## build and install newlib
-##---------------------------------------------------------------------------------
-#mkdir -p $target/newlib
-#cd $target/newlib
-#
-#if [ ! -f configured-newlib ]
-#then
-#	../../newlib-$NEWLIB_VER/configure \
-#	--target=$target \
-#	--prefix=$prefix \
-#	--disable-dependency-tracking \
-#	|| { echo "Error configuring newlib"; exit 1; }
-#	touch configured-newlib
-#fi
-#
-#if [ ! -f built-newlib ]
-#then
-#	$MAKE || { echo "Error building newlib"; exit 1; }
-#	touch built-newlib
-#fi
-#
-#if [ ! -f installed-newlib ]
-#then
-#	$MAKE install || { echo "Error installing newlib"; exit 1; }
-#	touch installed-newlib
-#fi
-#
-##---------------------------------------------------------------------------------
-## build and install the final compiler
-##---------------------------------------------------------------------------------
-#
-#cd $BUILDDIR
-#
-#cd $target/gcc
-#
-#if [ ! -f built-stage2 ]
-#then
-#	$MAKE all || { echo "Error building gcc stage2"; exit 1; }
-#	touch built-stage2
-#fi
-#
-#if [ ! -f installed-stage2 ]
-#then
-#	$MAKE install || { echo "Error installing gcc stage2"; exit 1; }
-#	touch installed-stage2
-#fi
-#
-#rm -fr $prefix/$target/sys-include
-#cd $BUILDDIR/pspsdk-$PSPSDK_VER
-#
-##---------------------------------------------------------------------------------
-## build and install the psp sdk
-##---------------------------------------------------------------------------------
-#echo "building pspsdk ..."
-#
-#if [ ! -f built-sdk ]
-#then
-#	$MAKE || { echo "ERROR BUILDING PSPSDK"; exit 1; }
-#	touch built-sdk
-#fi
-#
-#if [ ! -f installed-sdk ]
-#then
-#	$MAKE install || { echo "ERROR INSTALLING PSPSDK"; exit 1; }
-#	touch installed-sdk
-#fi
-#
-#cd $BUILDDIR
-#
-##---------------------------------------------------------------------------------
-## build and install the debugger
-##---------------------------------------------------------------------------------
-#mkdir -p $target/gdb
-#cd $target/gdb
-#
-#if [ ! -f configured-gdb ]
-#then
-#	CFLAGS=$cflags LDFLAGS=$ldflags ../../gdb-$GDB_VER/configure \
-#	--disable-nls --prefix=$prefix --target=$target --disable-werror \
-#	--disable-dependency-tracking \
-#	$CROSS_PARAMS \
-#	|| { echo "Error configuring gdb"; exit 1; }
-#	touch configured-gdb
-#fi
-#
-#if [ ! -f built-gdb ]
-#then
-#	$MAKE || { echo "Error building gdb"; exit 1; }
-#	touch built-gdb
-#fi
-#
-#if [ ! -f installed-gdb ]
-#then
-#	$MAKE install || { echo "Error installing gdb"; exit 1; }
-#	touch installed-gdb
-#fi
-#
+
+#---------------------------------------------------------------------------------
+# build and install newlib
+#---------------------------------------------------------------------------------
+mkdir -p $target/newlib
+cd $target/newlib
+
+if [ ! -f configured-newlib ]
+then
+	../../newlib-$NEWLIB_VER/configure \
+	--target=$target \
+	--prefix=$prefix \
+	--disable-dependency-tracking \
+	--enable-newlib-mb \
+	--enable-newlib-hw-fp \
+	--disable-newlib-supplied-syscalls \
+	|| { echo "Error configuring newlib"; exit 1; }
+	touch configured-newlib
+fi
+
+if [ ! -f built-newlib ]
+then
+	$MAKE || { echo "Error building newlib"; exit 1; }
+	touch built-newlib
+fi
+
+if [ ! -f installed-newlib ]
+then
+	$MAKE install || { echo "Error installing newlib"; exit 1; }
+	touch installed-newlib
+fi
+
+#---------------------------------------------------------------------------------
+# build and install the final compiler
+#---------------------------------------------------------------------------------
+
+cd $BUILDDIR
+
+cd $target/gcc
+
+if [ ! -f built-stage2 ]
+then
+	$MAKE all || { echo "Error building gcc stage2"; exit 1; }
+	touch built-stage2
+fi
+
+if [ ! -f installed-stage2 ]
+then
+	$MAKE install || { echo "Error installing gcc stage2"; exit 1; }
+	touch installed-stage2
+fi
+
+rm -fr $prefix/$target/sys-include
+cd $BUILDDIR
+
+#---------------------------------------------------------------------------------
+# build and install the debugger
+#---------------------------------------------------------------------------------
+mkdir -p $target/gdb
+cd $target/gdb
+
+if [ ! -f configured-gdb ]
+then
+	CFLAGS=$cflags LDFLAGS=$ldflags ../../gdb-$GDB_VER/configure \
+	--target=$target --prefix=$prefix \
+	--disable-nls \
+	--disable-werror \
+	--disable-dependency-tracking \
+	$CROSS_PARAMS \
+	|| { echo "Error configuring gdb"; exit 1; }
+	touch configured-gdb
+fi
+
+if [ ! -f built-gdb ]
+then
+	$MAKE || { echo "Error building gdb"; exit 1; }
+	touch built-gdb
+fi
+
+if [ ! -f installed-gdb ]
+then
+	$MAKE install || { echo "Error installing gdb"; exit 1; }
+	touch installed-gdb
+fi
+
