@@ -1,0 +1,12 @@
+ifeq ($(strip $(DEVKITPRO)),)
+$(error "Please set DEVKITPRO in your environment. export DEVKITPRO=<path to>devkitPro)
+endif
+
+include $(DEVKITSH4)/base_rules
+
+MACHDEP =  -ml -m4
+
+#---------------------------------------------------------------------------------
+%.elf:
+	@echo linking $(notdir $@)
+	$(LD) $^ -specs=dreamcast.specs $(LDFLAGS) $(LIBPATHS) $(LIBS) -o $@
