@@ -212,6 +212,10 @@ if [ $VERSION -eq 3 ]; then
 	targetarchives="pspsdk-src-${PSPSDK_VER}.tar.bz2"
 fi
 
+if [ $VERSION -eq 4 ]; then
+	hostarchives="general-tools-$GENERAL_TOOLS_VER.tar.bz2"
+fi
+
 if [ ! -z "$BUILD_DKPRO_SRCDIR" ] ; then
 	SRCDIR="$BUILD_DKPRO_SRCDIR"
 else
