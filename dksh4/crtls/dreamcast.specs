@@ -1,0 +1,8 @@
+%rename link                old_link
+
+*link:
+%(old_link) -T dreamcast.mem%s -T dreamcast.ld%s
+
+*startfile:
+dreamcast_crt0%O%s crti%O%s crtbegin%O%s
+
