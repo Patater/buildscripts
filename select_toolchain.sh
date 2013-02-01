@@ -64,10 +64,10 @@ case "$VERSION" in
     toolchain=DEVKITPSP
   ;;
   "4" )
-    GCC_VER=4.7.1
+    GCC_VER=4.7.2
     BINUTILS_VER=2.22
     NEWLIB_VER=1.20.0
-    GDB_VER=7.4.1
+    GDB_VER=7.5.1
     basedir='dksh4'
     package=devkitSH4
     target=sh4-none-elf

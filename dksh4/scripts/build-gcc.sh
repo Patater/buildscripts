@@ -81,7 +81,6 @@ fi
 
 unset CFLAGS
 cd $BUILDDIR
-
 #---------------------------------------------------------------------------------
 # build and install newlib
 #---------------------------------------------------------------------------------
@@ -165,4 +164,3 @@ then
 	$MAKE install || { echo "Error installing gdb"; exit 1; }
 	touch installed-gdb
 fi
-
