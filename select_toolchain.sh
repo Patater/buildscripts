@@ -65,7 +65,7 @@ case "$VERSION" in
   ;;
   "4" )
     GCC_VER=4.7.2
-    BINUTILS_VER=2.22
+    BINUTILS_VER=2.23.1
     NEWLIB_VER=1.20.0
     GDB_VER=7.5.1
     basedir='dksh4'
